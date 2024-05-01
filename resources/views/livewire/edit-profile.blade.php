@@ -28,12 +28,14 @@
                             <x-ei-spinner-2 class="text-white animate-spin h-10" />
                         </div>
                     </div>
+                    <div x-show="$wire.showSuccessIndicator" class="flex justify-center items-end">
+                        <p class="text-emerald-500 pr-2">Profile Updated Successfully</p>
+                        <x-iconsax-bro-tick-circle class="text-emerald-500 w-5 h-5 " />
+                    </div>
                 </form>
 
                 <!-- Success Indicator -->
-                <div class="flex justify-end pt-4">
-                    
-                </div>
+
             </div>
         </div>
     </div>

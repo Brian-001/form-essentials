@@ -15,6 +15,8 @@ class EditProfile extends Component
     #[Rule('required', message: 'Yo, add bio')]
     public $bio = '';
 
+    public $showSuccessIndicator = false;
+
     public function save()
     {
         $this->validate();
@@ -25,6 +27,8 @@ class EditProfile extends Component
         ]);
 
         sleep(1);
+
+        $this->showSuccessIndicator = true;
 
         return view('livewire.edit-profile');
 
