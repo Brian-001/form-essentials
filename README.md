@@ -1,66 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 style="color:red;">Livewire Forms</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Let's start by creating two livewire files that is Livewire component and Livewire blade component.
 
-## About Laravel
+We simply accomplish this by writing the following command in our terminal
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```php
+php artisan make:livewire edit-profile
+```
+The above command creates two files `EditProfile` (Livewire Component) and `edit-profile.blade.php`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+EditProfile can be located in this path by default: 
+`app/Livewire/EditProfile.php` while edit-profile.blade.php can be found in `resources/views/livewire/edit-profile.blade.php`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Inside `EditProfile.php`, let us modify our code to the following:
 
-## Learning Laravel
+```php
+<?php
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+namespace App\Livewire;
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+use App\Models\User;
+use App\Models\Profile;
+use Livewire\Component;
+use Illuminate\Validation\Rule;
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+class EditProfile extends Component
+{
+    public $username = '';
 
-## Laravel Sponsors
+    public $bio = '';
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    public $showSuccessIndicator = false;
 
-### Premium Partners
+    public function rules()
+    {
+        return
+        [
+            'username' => ['required', Rule::unique('profiles')],
+            'bio' => ['required', Rule::unique('profiles')]
+        ];
+    }
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    public function save()
+    {
+        $this->validate();
 
-## Contributing
+        Profile::create([
+            'username' => $this->username,
+            'bio'=>$this->bio
+        ]);
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+        sleep(1);
 
-## Code of Conduct
+        $this->showSuccessIndicator = true;
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+        return view('livewire.edit-profile');
 
-## Security Vulnerabilities
+    }
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    public function render()
+    {
+        return view('livewire.edit-profile');
+    }
+}
 
-## License
+```
+Let us modify edit-profile.blade.php to look like:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```php
+<div class="py-12">
+    <div class="mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="flex justify-center items-center mt-8 mb-8">
+                <h1>Livewire Form</h1>
+            </div>
+            <div class="flex justify-center items-center mt-8 mb-8">
+                <form wire:submit="save" class="w-1/2 max-w-lg bg-white p-8 rounded-lg shadow-md">
+                    <div class="mb-4">
+                        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                        <input wire:model="username"
+                        @class([
+                            'px-3 py-2 rounded-md w-full' ,
+                            $errors->missing('username') ? 'border border-gray-300' : '',
+                            $errors->has('username') ? 'border-2 border-red-500' : ''
+                        ])
+                        >
+                        @error('username')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="mb-6">
+                        <label for="bio" class="block text-gray-700 text-sm font-bold mb-2">Bio</label>
+                        <textarea wire:model="bio" rows="4" class="w-full resize-none border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Enter your bio"
+                        ></textarea>
+                        @error('bio')
+                        <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="mb-6 flex flex-col-2">
+                        <div class="relative w-full ">
+                            <button type="submit" class="h-10 bg-blue-500 focus:border-blue-700 text-white font-bold py-2 px-14 rounded disabled:cursor-not-allowed disabled:opacity-75">Submit</button>
+                        </div>
+                        <div wire:loading.flex class="flex absolute items-center">
+                            <x-ei-spinner-2 class="text-white animate-spin h-10" />
+                        </div>
+                    </div>
+                    <div x-show="$wire.showSuccessIndicator" x-transition.out.opacity.duration.2000ms x-effect="if($wire.showSuccessIndicator) setTimeout(() => $wire.showSuccessIndicator = false, 3000)" class="flex justify-center items-end">
+                        <p class="text-emerald-500 pr-2">Profile Updated Successfully</p>
+                        <x-iconsax-bro-tick-circle class="text-emerald-500 w-5 h-5 " />
+                    </div>
+                </form>
+
+                <!-- Success Indicator -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+```
