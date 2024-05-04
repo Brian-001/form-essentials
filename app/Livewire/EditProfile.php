@@ -2,20 +2,27 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use App\Models\Profile;
 use Livewire\Component;
-use App\Models\User;
-use Livewire\Attributes\Rule;
+use Illuminate\Validation\Rule;
 
 class EditProfile extends Component
 {
-    #[Rule('required', message: 'Yo, add username')]
     public $username = '';
 
-    #[Rule('required', message: 'Yo, add bio')]
     public $bio = '';
 
     public $showSuccessIndicator = false;
+
+    public function rules()
+    {
+        return
+        [
+            'username' => ['required', Rule::unique('profiles')],
+            'bio' => ['required', Rule::unique('profiles')]
+        ];
+    }
 
     public function save()
     {
