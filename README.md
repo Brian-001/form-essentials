@@ -26,12 +26,14 @@ use Illuminate\Validation\Rule;
 
 class EditProfile extends Component
 {
+    // Initialize properties for username, bio, and success indicator
     public $username = '';
 
     public $bio = '';
 
     public $showSuccessIndicator = false;
 
+     // Define validation rules for username and bio
     public function rules()
     {
         return
@@ -41,23 +43,30 @@ class EditProfile extends Component
         ];
     }
 
+    // Save the user's input to the database
     public function save()
     {
+        // Validate the input before saving
         $this->validate();
 
+        // Create a new record (profie) in the database
         Profile::create([
             'username' => $this->username,
             'bio'=>$this->bio
         ]);
 
+        // Pause execution for 1 second
         sleep(1);
 
+        // Set the success indicator to true
         $this->showSuccessIndicator = true;
 
+        // Return the view for the component
         return view('livewire.edit-profile');
 
     }
 
+    // Render the view for the component
     public function render()
     {
         return view('livewire.edit-profile');
