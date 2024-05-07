@@ -128,3 +128,16 @@ Let us modify edit-profile.blade.php to look like:
 </div>
 
 ```
+# Explanation for the above code
+
+`wire:model="username"` This attribute tells Livewire to bind the input field to the username property of the component. This means that whenever the user types something in the input field, the username property will be updated with the new value.
+
+
+`@class([...])` This is a Blade directive that adds classes to the input field based on certain conditions. The classes are defined in an array.
+
+` $errors->missing('username') ? 'border border-gray-300'.  : '' `
+This condition checks if there's an error for the username field. If there is, it adds a border to the input field. The border is gray in color.
+
+`errors->has('username') ? 'border-2 border-red-500' : '': `
+This condition checks if there's an error for the username field. If there is, it adds a red border to the input field. The border is thicker than the default border.
+
