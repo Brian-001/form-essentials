@@ -128,9 +128,9 @@ Let us modify edit-profile.blade.php to look like:
 </div>
 
 ```
-# Explanation for the above code
+## Explanation for the above code
 
-## Livewire Component's blade file `edit-profile.blade.php` 
+### Livewire Component's blade file `edit-profile.blade.php` 
 
 `wire:model="username"` This attribute tells Livewire to bind the input field to the username property of the component. This means that whenever the user types something in the input field, the username property will be updated with the new value.
 
@@ -144,7 +144,7 @@ This condition checks if there's an error for the username field. If there is, i
 This condition checks if there's an error for the username field. If there is, it adds a red border to the input field. The border is thicker than the default border.
 
 
-## Livewire Component file `EditProfile.php`
+### Livewire Component file `EditProfile.php`
 
 `EditProfile` class extends class `Component` class provided by livewire.
 It declares three public properties that are: 
@@ -162,4 +162,63 @@ It sets `showSuccessIndicator` property to `true` to indicate successful save.
 Finally, it returns view for the `EditProfile` component.
 
 `render()` returns livewire blade component.
+
+
+### Adding radio buttons in livewire 
+
+```html
+<fieldset class="flex flex-col gap-2">
+    <div>
+        <legend class="font-medium text-gray-700 text-base">Receive Emails</legend>
+    </div>
+    <div class="flex gap-6">
+        <label class="flex items-center gap-2">
+            <input type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
+            Yes
+        </label>
+        <label class="flex items-center gap-2">
+            <input type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
+            No
+        </label>
+    </div>
+</fieldset>
+```
+By using the `<fieldset>` and `<label>` tags, you ensure that the radio buttons are properly grouped and labeled, making the form more accessible and easier to understand for users, especially those using `screen readers` or other `assistive technologies`.
+
+To add, some styling in radio buttons such as `class="text-emerald-500 focus:ring-emerald-500"`
+, 
+ Ensure that taiwindCSS for plugin is installed. You can do this by installing via `npm` ie..
+
+ ```php 
+ npm install @tailwindcss/forms
+ ```
+
+ Go to `tailwind.config.js` inside it ensure you have the following:
+
+ ```js
+ import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+    ],
+
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
+        },
+    },
+
+    plugins: [forms, typography],
+};
+ ```
+With the above, your styling for the radio buttons works 🎉.
+
 
