@@ -130,6 +130,8 @@ Let us modify edit-profile.blade.php to look like:
 ```
 # Explanation for the above code
 
+## Livewire Component's blade file `edit-profile.blade.php` 
+
 `wire:model="username"` This attribute tells Livewire to bind the input field to the username property of the component. This means that whenever the user types something in the input field, the username property will be updated with the new value.
 
 
@@ -140,4 +142,24 @@ This condition checks if there's an error for the username field. If there is, i
 
 `errors->has('username') ? 'border-2 border-red-500' : '': `
 This condition checks if there's an error for the username field. If there is, it adds a red border to the input field. The border is thicker than the default border.
+
+
+## Livewire Component file `EditProfile.php`
+
+`EditProfile` class extends class `Component` class provided by livewire.
+It declares three public properties that are: 
+
+ `$username`
+ `$bio`
+ `$showSuccessIndicator`
+
+ `rules()` defines validation rules. ie required..
+
+ `save()` is responsible for saving user input to the database.
+ It then creates `profile` record in the database with the provided `username` and `bio`.
+Then the method pauses for one second using `sleep(1)`
+It sets `showSuccessIndicator` property to `true` to indicate successful save.
+Finally, it returns view for the `EditProfile` component.
+
+`render()` returns livewire blade component.
 
