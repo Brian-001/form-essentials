@@ -23,6 +23,13 @@
                         <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="mb-6">
+                        <select name="" id="" class="w-full px-3 py-2 rounded-lg focus:border-emerald-700">
+                            <option value="foo">Foo</option>
+                            <option value="foo">Food</option>
+                        </select>
+                    </div>
+
                     <div class="mb-6 flex flex-col-2">
                         <div class="relative w-full ">
                             <button type="submit" class="h-10 bg-emerald-500 focus:border-emerald-700 text-white font-bold py-2 px-14 rounded disabled:cursor-not-allowed disabled:opacity-75">Submit</button>
@@ -31,18 +38,34 @@
                             <x-ei-spinner-2 class="text-white animate-spin h-10" />
                         </div>
                     </div>
-                    <fieldset class="flex flex-col gap-2">
+                    <fieldset class="flex flex-col gap-2 mb-6">
                         <div>
                             <legend class="font-medium text-gray-700 text-base">Receive Emails</legend>
                         </div>
                         <div class="flex gap-6">
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
+                                <input wire:model.boolean="receive_emails" type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
                                 Yes
                             </label>
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
+                                <input wire:model.boolean="receive_emails" type="radio" name="recieve_emails" class="text-emerald-500 focus:ring-emerald-500">
                                 No
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="flex flex-col gap-2">
+                        <div>
+                            <legend class="font-medium text-gray-700 text-base">Email Types?</legend>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="receive_updates" class="text-emerald-500 focus:ring-emerald-500 rounded">
+                                General Updates
+                            </label>
+                            <label class=" flex items-center gap-2">
+                                <input type="checkbox" name="receive_offers" class="text-emerald-500 focus:ring-emerald-500 rounded">
+                                Marketing Offers
                             </label>
                         </div>
                     </fieldset>

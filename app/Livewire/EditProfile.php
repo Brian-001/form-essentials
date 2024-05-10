@@ -15,12 +15,14 @@ class EditProfile extends Component
 
     public $showSuccessIndicator = false;
 
+    public $receive_emails = false;
+
     public function rules()
     {
         return
         [
             'username' => ['required', Rule::unique('profiles')],
-            'bio' => ['required', Rule::unique('profiles')]
+            'bio' => ['required', Rule::unique('profiles')],
         ];
     }
 
@@ -30,7 +32,8 @@ class EditProfile extends Component
 
         Profile::create([
             'username' => $this->username,
-            'bio'=>$this->bio
+            'bio'=>$this->bio,
+            'receive_emails'=> $this->receive_emails
         ]);
 
         sleep(1);

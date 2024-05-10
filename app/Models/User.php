@@ -38,17 +38,12 @@ class User extends Authenticatable
     //     ]
     // ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-
-    // protected $hidden = [
-    //     'password',
-    //     'remembertoken'
-    // ];
-
+   protected $cast = [
+    'receive_emails' => 'boolean',
+    'receive_updates' => 'boolean',
+    'receive_offers' => 'boolean',
+    'country' => 'string',
+   ];
     /**
      * The attributes that are mass assignable.
      *
