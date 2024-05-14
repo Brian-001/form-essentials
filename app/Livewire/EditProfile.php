@@ -17,12 +17,19 @@ class EditProfile extends Component
 
     public $receive_emails = false;
 
+    public $receive_updates = false;
+
+    public $receive_offers = false;
+
+    public $country = '';
+
     public function rules()
     {
         return
         [
             'username' => ['required', Rule::unique('profiles')],
             'bio' => ['required', Rule::unique('profiles')],
+            'receive_emails' => 'required'
         ];
     }
 
@@ -33,7 +40,10 @@ class EditProfile extends Component
         Profile::create([
             'username' => $this->username,
             'bio'=>$this->bio,
-            'receive_emails'=> $this->receive_emails
+            'receive_emails'=> $this->receive_emails,
+            'receive_updates'=> $this->receive_updates,
+            'receive_offers' => $this->receive_offers,
+            'country' => $this->country
         ]);
 
         sleep(1);
