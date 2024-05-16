@@ -29,7 +29,8 @@ class EditProfile extends Component
         [
             'username' => ['required', Rule::unique('profiles')],
             'bio' => ['required', Rule::unique('profiles')],
-            'receive_emails' => 'required'
+            'receive_emails' => ['required'],
+            'country' => ['required']
         ];
     }
 
