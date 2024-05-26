@@ -30,15 +30,11 @@
 
                             ])>
                             <option value="" selected disabled>Choose Country</option>
-                            <option value="KE">Kenya</option>
-                            <option value="UG">Uganda</option>
-                            <option value="US">United States</option>
-                            <option value="TZ">Tanzania</option>
-                            <option value="CA">Canada</option>
-                            <option value="MX">Mexico</option>
-                            <option value="AR">Argentina</option>
-                            <option value="GM">Germany</option>
-                            <option value="IT">Italy</option>
+
+                            @foreach (App\Enums\Country::cases() as $country )
+                            <option value="{{ $country->value }}">{{$country->label()}}</option>
+
+                            @endforeach
                             @error('country')
                             aria-invalid = true
                             aria-description = {{ $message }}
@@ -85,7 +81,7 @@
                             </label>
                         </div>
                     </fieldset>
-                    <div x-show="$wire.showSuccessIndicator" x-transition.out.opacity.duration.2000ms x-effect="if($wire.showSuccessIndicator) setTimeout(() => $wire.showSuccessIndicator = false, 3000)" class="flex justify-center items-end">
+                    <div x-data="{ showSuccessIndicator: @entangle('showSuccessIndicator') }" class="flex justify-center items-end" x-show="showSuccessIndicator" x-transition.out.opacity.duration.2000ms x-effect="if(showSuccessIndicator) setTimeout(() => showSuccessIndicator = false, 3000)">
                         <p class="text-emerald-500 pr-2">Profile Updated Successfully</p>
                         <x-iconsax-bro-tick-circle class="text-emerald-500 w-5 h-5 " />
                     </div>

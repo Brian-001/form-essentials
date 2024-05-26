@@ -51,12 +51,14 @@ class EditProfile extends Component
 
         $this->showSuccessIndicator = true;
 
-        return view('livewire.edit-profile');
+
 
     }
 
     public function render()
     {
-        return view('livewire.edit-profile');
+        return view('livewire.edit-profile', [
+            'showSuccessIndicator' => $this->showSuccessIndicator
+        ]);
     }
 }
