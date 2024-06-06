@@ -31,3 +31,5 @@ Route::middleware([
 });
 Route::get('/edit-profile', EditProfile::class)->name('edit-profile');
 
+Route::get('/store/{storeId}/orders');
+
